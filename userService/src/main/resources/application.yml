@@ -1,3 +1,31 @@
+#server:
+#  port: 8081
+#
+#spring:
+#  application:
+#    name: user-service
+#
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/userdb
+#    username: root
+#    password: linux123
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#
+#security:
+#  jwt:
+#    secret: mySuperSecretKey12345   # 👈 Already fixed earlier
+#    expiration-ms: 3600000          # 👈 ADD THIS (1 hour in milliseconds)
+
 server:
   port: 8081
 
@@ -6,9 +34,11 @@ spring:
     name: user-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/userdb
+    # Use DB_HOST if set (for Docker), otherwise fall back to localhost
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/userdb
     username: root
-    password: linux123
+    # Use DB_PASSWORD if set (for Docker), otherwise default to linux123
+    password: ${DB_PASSWORD:linux123}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -19,9 +49,11 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      # Use EUREKA_HOST if set (for Docker), otherwise default to localhost
+      defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka/
 
 security:
   jwt:
-    secret: mySuperSecretKey12345   # 👈 Already fixed earlier
-    expiration-ms: 3600000          # 👈 ADD THIS (1 hour in milliseconds)
+    secret: ${JWT_SECRET:mySuperSecretKey12345}   # can override via env var
+    expiration-ms: ${JWT_EXPIRATION_MS:3600000}   # default 1 hour
+

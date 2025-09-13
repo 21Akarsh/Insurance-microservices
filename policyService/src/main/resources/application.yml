@@ -1,3 +1,26 @@
+#server:
+#  port: 8082
+#
+#spring:
+#  application:
+#    name: policy-service
+#
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/policydb
+#    username: root
+#    password: linux123
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+
 server:
   port: 8082
 
@@ -6,9 +29,11 @@ spring:
     name: policy-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/policydb
+    # Use DB_HOST if provided; default to localhost when running on your laptop.
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/policydb
     username: root
-    password: linux123
+    # Use DB_PASSWORD if provided; default to linux123 when running locally.
+    password: ${DB_PASSWORD:linux123}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -19,4 +44,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      # Use EUREKA_HOST if provided; default to localhost when running locally.
+      defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka/
+
