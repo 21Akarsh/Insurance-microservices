@@ -33,4 +33,8 @@ public class NotificationService {
             return repo.save(n);
         }).orElseThrow(() -> new RuntimeException("Notification not found"));
     }
+
+    public List<Notification> getAllNotifications(){
+        return repo.findAll();
+    }
 }

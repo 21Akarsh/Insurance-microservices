@@ -29,7 +29,7 @@ spring:
     name: policy-service
 
   datasource:
-    # Use DB_HOST if provided; default to localhost when running on your laptop.
+#     Use DB_HOST if provided; default to localhost when running on your laptop.
     url: jdbc:mysql://${DB_HOST:localhost}:3306/policydb
     username: root
     # Use DB_PASSWORD if provided; default to linux123 when running locally.
@@ -44,6 +44,9 @@ spring:
 eureka:
   client:
     service-url:
-      # Use EUREKA_HOST if provided; default to localhost when running locally.
+      # Use EUREKA_HOST if set (for Docker), otherwise default to localhost
       defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka/
+  instance:
+    prefer-ip-address: true         # 👈 Forces IP instead of hostname
+    hostname: localhost
 

@@ -4,34 +4,51 @@
 #spring:
 #  application:
 #    name: api-gateway
+#
 #  cloud:
 #    gateway:
-#          routes:
-#            - id: user-service
-#              uri: lb://user-service
-#              predicates:
-#                - Path=/users/**
-#            - id: policy-service
-#              uri: lb://policy-service
-#              predicates:
-#                - Path=/policies/**
-#            - id: claim-service
-#              uri: lb://claim-service
-#              predicates:
-#                - Path=/claims/**
-#            - id: notification-service
-#              uri: lb://notification-service
-#              predicates:
-#                - Path=/notifications/**
+#      discovery:
+#        locator:
+#          enabled: true
+#          lowerCaseServiceId: true
+#      routes:
+#        - id: user-service
+#          uri: lb://user-service
+#          predicates:
+#            # Match both /users and anything under it
+#            - Path=/users/**
+#        - id: policy-service
+#          uri: lb://policy-service
+#          predicates:
+#            - Path=/policies/**
+#        - id: claim-service
+#          uri: lb://claim-service
+#          predicates:
+#            - Path=/claims/**
+#        - id: notification-service
+#          uri: lb://notification-service
+#          predicates:
+#            - Path=/notifications/**
 #
 #eureka:
 #  client:
 #    service-url:
-#      defaultZone: http://localhost:8761/eureka/
+#      defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka/
 #
+#logging:
+#  level:
+#    org.springframework.cloud.gateway: DEBUG
+
 server:
-  # 8090 is the internal port your gateway listens on.
   port: 8090
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
 
 spring:
   application:
@@ -39,6 +56,8 @@ spring:
 
   cloud:
     gateway:
+      discovery:
+          lowerCaseServiceId: true
       routes:
         - id: user-service
           uri: lb://user-service
@@ -52,14 +71,15 @@ spring:
           uri: lb://claim-service
           predicates:
             - Path=/claims/**
-        - id: notification-service
+        - id: notificationService
           uri: lb://notification-service
           predicates:
             - Path=/notifications/**
 
-eureka:
-  client:
-    service-url:
-      # Use EUREKA_HOST if running in Docker; fall back to localhost when
-      # running the gateway directly on your machine.
-      defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka/
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
+

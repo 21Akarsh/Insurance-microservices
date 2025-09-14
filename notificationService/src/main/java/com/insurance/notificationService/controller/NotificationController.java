@@ -39,4 +39,10 @@ public class NotificationController {
     public ResponseEntity<Notification> markSent(@PathVariable Long id) {
         return ResponseEntity.ok(service.markSent(id));
     }
+
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello";
+    }
+
 }

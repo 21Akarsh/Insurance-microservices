@@ -8,7 +8,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - "3306:3306"                  # change host port if local MySQL conflicts
+      - "3307:3306"                  # change host port if local MySQL conflicts
     volumes:
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d   # <-- contains init.sql
@@ -58,7 +58,7 @@ services:
       DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       EUREKA_HOST: eurekaserver
     ports:
-      - "8082:8082"
+      - "8083:8083"
     depends_on:
       - mysql
       - eurekaserver
@@ -73,7 +73,7 @@ services:
       DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       EUREKA_HOST: eurekaserver
     ports:
-      - "8084:8084"
+      - "8082:8082"
     depends_on:
       - mysql
       - eurekaserver
@@ -88,7 +88,7 @@ services:
       DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       EUREKA_HOST: eurekaserver
     ports:
-      - "8085:8085"
+      - "8084:8084"
     depends_on:
       - mysql
       - eurekaserver

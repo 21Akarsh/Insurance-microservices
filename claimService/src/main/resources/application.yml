@@ -46,3 +46,6 @@ eureka:
     service-url:
       # Use EUREKA_HOST if provided (for Docker), otherwise default to localhost
       defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka/
+  instance:
+    prefer-ip-address: true         # 👈 Forces IP instead of hostname
+    hostname: localhost
